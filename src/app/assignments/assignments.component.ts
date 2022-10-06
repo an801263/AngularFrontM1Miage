@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { AssignmentsService } from '../shared/assignments.service';
 import { Assignment } from './assignment.model';
 
 @Component({
@@ -10,43 +12,22 @@ import { Assignment } from './assignment.model';
 export class AssignmentsComponent implements OnInit {
   titre = 'Gestion des assignments';
   ajoutActive = false;
-  nomDevoir:string = "";
+  nomDevoir:string = "Ici mettre le nom du devoir";
   dateRendu:Date = new Date();
   assignementSelectionne!:Assignment;
+  formVisible = false;
+  assignments: Assignment[];
 
-  ngOnInit(): void {
-    setTimeout(()=> {
-      this.ajoutActive = true;
-    }, 2000);
-  }
+  constructor (private assignmentService:AssignmentsService) {}
   
-  onSubmit() {
-    const newAssignment = new Assignment();
-    newAssignment.nom = this.nomDevoir;
-    newAssignment.dateDeRendu = this.dateRendu;
-    newAssignment.rendu = false;
-
-    this.assignments.push(newAssignment);
+  ngOnInit(): void {
+    //this.assignments = this.assignmentService.getAssignments();
+    this.getAssignments();
   }
 
-  assignments:Assignment[] = [
-    {
-      nom: 'Devoir WebComponents lecteur video',
-      dateDeRendu: new Date('2022-11-10'),
-      rendu: true
-    },
-    {
-      nom: 'Devoir Angular en binôme',
-      dateDeRendu: new Date('2022-08-08'),
-      rendu: false
-    },
-    {
-      nom: 'Devoir App Mobile cross platform',
-      dateDeRendu: new Date('2022-10-10'),
-      rendu: false
-    },
-  ];
-  constructor() {}
+  getAssignments() {
+    this.assignmentService.getAssignments().subscribe(assignments => this.assignments = assignments);
+  }
 
   getColor(a: any) {
      return a.rendu ? 'green' : 'red';
@@ -54,6 +35,16 @@ export class AssignmentsComponent implements OnInit {
 
   assignmentClique(assignment:Assignment) {
     this.assignementSelectionne = assignment;
+  }
+
+  onAddAssignmentBtn() {
+    this.formVisible = true;
+  }
+
+  onNouvelAssignment(event:Assignment) {
+   //this.assignments.push(event);
+   this.assignmentService.addAssignment(event).subscribe(message=> console.log(message));
+    this.formVisible = false;
   }
   
 }

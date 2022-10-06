@@ -11,11 +11,14 @@ export class AssignmentDetailComponent implements OnInit {
  
   
   constructor() {
-   }
 
+   }
    
   ngOnInit(): void {
   
   }
 
+  onAssignmentRendu() {
+    this.assignmentTransmis.rendu = true;
+  }
 }
