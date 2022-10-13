@@ -38,13 +38,13 @@ export class AssignmentsComponent implements OnInit {
   }
 
   onAddAssignmentBtn() {
-    this.formVisible = true;
+    //this.formVisible = true;
   }
 
-  onNouvelAssignment(event:Assignment) {
+  /*onNouvelAssignment(event:Assignment) {
    //this.assignments.push(event);
-   this.assignmentService.addAssignment(event).subscribe(message=> console.log(message));
+    this.assignmentService.addAssignment(event).subscribe();
     this.formVisible = false;
-  }
+  }*/
   
 }

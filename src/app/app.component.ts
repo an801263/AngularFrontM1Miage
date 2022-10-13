@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = "Ici la valeur d'une variable";
+  title = "Application de gestion des devoirs à rendre (Assignments)";
 }

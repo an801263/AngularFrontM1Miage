@@ -19,6 +19,14 @@ import { AssignmentDetailComponent } from './assignments/assignment-detail/assig
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { AddAssignmentComponent } from './assignments/add-assignment/add-assignment.component';
+import { RouterModule, Routes } from '@angular/router';
+
+const routes : Routes = [
+  {path: '', component:AssignmentsComponent},
+  {path: 'home', component:AssignmentsComponent},
+  {path: 'add', component:AssignmentsComponent},
+  {path: 'assignement/:id', component:AssignmentDetailComponent}
+];
 
 @NgModule({
   declarations: [
@@ -35,6 +43,7 @@ import { AddAssignmentComponent } from './assignments/add-assignment/add-assignm
     MatInputModule, MatFormFieldModule,
     MatDatepickerModule, MatNativeDateModule,
     FormsModule, MatListModule, MatCardModule, MatCheckboxModule,
+    RouterModule.forRoot(routes)
   ],
   providers: [],
   bootstrap: [AppComponent]

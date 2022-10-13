@@ -1,24 +1,36 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Assignment } from '../assignment.model';
+import { AssignmentsService } from 'src/app/shared/assignments.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-assignment-detail',
   templateUrl: './assignment-detail.component.html',
   styleUrls: ['./assignment-detail.component.css']
 })
+
 export class AssignmentDetailComponent implements OnInit {
- @Input() assignmentTransmis!: Assignment;
+ assignmentTransmis: Assignment | null;
  
   
-  constructor() {
+  constructor(private assignmentsService: AssignmentsService) {
 
-   }
+  }
    
   ngOnInit(): void {
   
   }
 
-  onAssignmentRendu() {
-    this.assignmentTransmis.rendu = true;
+  onAssignmentRendu() 
+  {
+    this.assignmentTransmis!.rendu = true;
+    this.assignmentsService.updateAssignment(this.assignmentTransmis!).subscribe(message => console.log(message));
+  }
+
+  onDelete()
+  {
+    this.assignmentsService.deleteAssignment(this.assignmentTransmis!).subscribe(message => console.log(message));
+  
+    this.assignmentTransmis = null;
   }
 }
