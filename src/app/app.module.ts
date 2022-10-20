@@ -26,7 +26,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 const routes : Routes = [
   {path: '', component:AssignmentsComponent},
   {path: 'home', component:AssignmentsComponent},
-  {path: 'add', component:AssignmentsComponent},
+  {path: 'add', component:AddAssignmentComponent},
   {path: 'assignement/:id', component:AssignmentDetailComponent}
 ];
 
