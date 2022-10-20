@@ -7,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = "Application de gestion des devoirs à rendre (Assignments)";
+  opened = false;
 }
