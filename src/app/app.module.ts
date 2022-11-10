@@ -19,32 +19,41 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { AddAssignmentComponent } from './assignments/add-assignment/add-assignment.component';
 import { RouterModule, Routes } from '@angular/router';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatToolbar, MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { EditAssignmentComponent } from './assignments/edit-assignment/edit-assignment.component';
+import { AuthGuard } from './shared/auth.guard';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { HttpClientModule } from '@angular/common/http';
 
 
 const routes : Routes = [
   {path: '', component:AssignmentsComponent},
   {path: 'home', component:AssignmentsComponent},
   {path: 'add', component:AddAssignmentComponent},
-  {path: 'assignement/:id', component:AssignmentDetailComponent}
+  {path: 'assignment/:id', component:AssignmentDetailComponent},
+  {
+    path: 'assignment/:id/edit',
+    component: EditAssignmentComponent,
+    canActivate: [AuthGuard]
+  }
 ];
-
 @NgModule({
   declarations: [
     AppComponent,
-    AssignmentsComponent,
+    AssignmentsComponent, AssignmentDetailComponent,
     RenduDirective,
-    AssignmentDetailComponent,
-    AddAssignmentComponent
+    AddAssignmentComponent,
+    EditAssignmentComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MatButtonModule, MatIconModule, MatDividerModule,
     MatInputModule, MatFormFieldModule,
-    MatDatepickerModule, MatNativeDateModule,
-    FormsModule, MatListModule, MatCardModule, MatCheckboxModule,
+    MatDatepickerModule, MatNativeDateModule, MatListModule,
+    MatCardModule, MatCheckboxModule, MatSlideToggleModule,
+    FormsModule, HttpClientModule,
     RouterModule.forRoot(routes), MatToolbarModule, MatSidenavModule
   ],
   providers: [],

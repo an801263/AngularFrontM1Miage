@@ -1,36 +1,61 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Assignment } from '../assignment.model';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AssignmentsService } from 'src/app/shared/assignments.service';
-import { ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/shared/auth.service';
+import { Assignment } from '../assignment.model';
 
 @Component({
   selector: 'app-assignment-detail',
   templateUrl: './assignment-detail.component.html',
-  styleUrls: ['./assignment-detail.component.css']
+  styleUrls: ['./assignment-detail.component.css'],
 })
-
 export class AssignmentDetailComponent implements OnInit {
- assignmentTransmis: Assignment | null;
- 
-  
-  constructor(private assignmentsService: AssignmentsService) {
+  assignmentTransmis!: Assignment | undefined;
 
-  }
-   
+  constructor(
+    private assignmentService: AssignmentsService,
+    private authService:AuthService,
+    private route: ActivatedRoute,
+    private router:Router
+  ) {}
+
   ngOnInit(): void {
-  
+    this.getAssignment();
   }
 
-  onAssignmentRendu() 
-  {
-    this.assignmentTransmis!.rendu = true;
-    this.assignmentsService.updateAssignment(this.assignmentTransmis!).subscribe(message => console.log(message));
+  getAssignment() {
+    const id = +this.route.snapshot.params['id'];
+    this.assignmentService.getAssignment(id).subscribe((assignment) => {
+      this.assignmentTransmis = assignment;
+    });
   }
 
-  onDelete()
-  {
-    this.assignmentsService.deleteAssignment(this.assignmentTransmis!).subscribe(message => console.log(message));
-  
-    this.assignmentTransmis = null;
+  onAssignmentRendu() {
+    if (!this.assignmentTransmis) return;
+
+    this.assignmentTransmis.rendu = true;
+
+    this.assignmentService
+      .updateAssignment(this.assignmentTransmis)
+      .subscribe((message) => {
+        console.log(message);
+        this.router.navigate(['/home']);
+      });
+  }
+
+  onDelete() {
+    if (!this.assignmentTransmis) return;
+
+    this.assignmentService
+      .deleteAssignement(this.assignmentTransmis)
+      .subscribe((message) => {
+        console.log(message);
+        this.assignmentTransmis = undefined;
+        this.router.navigate(['/home']);
+      });
+  }
+
+  isAdmin():boolean {
+    return this.authService.loggedIn;
   }
 }

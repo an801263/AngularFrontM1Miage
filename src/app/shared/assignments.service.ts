@@ -2,58 +2,64 @@ import { Injectable } from '@angular/core';
 import { Assignment } from '../assignments/assignment.model';
 import { Observable, of } from 'rxjs';
 import { LoggingService } from './logging.service';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AssignmentsService {
-  assignments:Assignment[] = [
-    {
-      id: 1,
-      nom: "TP1",
-      dateDeRendu: new Date('2022-01-12'),
-      rendu: true
-    },
-    {
-      id:2,
-      nom: "TP2",
-      dateDeRendu: new Date('2022-03-06'),
-      rendu: false
-    },
-    {
-      id:3,
-      nom: "TP3",
-      dateDeRendu: new Date('2022-05-15'),
-      rendu: false
-    }
-  ]
+  assignments:Assignment[] = [];
 
-  constructor(private loggingService:LoggingService) { }
+  constructor(private logginService:LoggingService,
+              private http:HttpClient) { }
+
+ uri = "http://localhost:8010/api/assignments";
+ //uri = "https://api-cours-angular-2023.herokuapp.com/api/assignments";
 
   getAssignments():Observable<Assignment[]> {
-    return of(this.assignments);
-  }
-  
-  getAssignment(id:number):Observable<Assignment> {
-    return of(this.assignments.find(a => a.id === id)!);
+    return this.http.get<Assignment[]>(this.uri)
+
+    //return of(this.assignments);
   }
 
-  addAssignment(assignment: Assignment): Observable<string> {
-    this.assignments.push(assignment);
-    
-    this.loggingService.log(assignment.nom, "Ajouté");
-    return of('Assignment ajouté');
+  // renvoie comme Observable l'assignment dont l'id est passé
+  // en paramètre, ou undefined s'il n'existe pas
+  getAssignment(id:number):Observable<Assignment|undefined> {
+    /*const a:Assignment|undefined = this.assignments.find(a => a.id === id);
+    if(a)
+
+    console.log("getAssignment id= " + id + " nom = " + a.nom)*/
+    //return of(a);
+    console.log("get by id id = "+id)
+    return this.http.get<Assignment>(this.uri + "/" + id)
   }
 
-  updateAssignment(assignment: Assignment):Observable<string> {
-    return of("Assignment service: assignment modifié!");
+  addAssignment(assignment:Assignment):Observable<any> {
+    //this.assignments.push(assignment);
+
+    //this.logginService.log(assignment.nom, "ajouté !");
+
+    //return of("Assignment ajouté");
+    return this.http.post<Assignment>(this.uri, assignment);
   }
 
-  deleteAssignment(assignment: Assignment):Observable<string> {
-    let pos = this.assignments.indexOf(assignment)
-    this.assignments.splice(pos, 1)
+  updateAssignment(assignment:Assignment):Observable<string> {
+    // On n'a besoin de rien faire pour le moment, puisque l'assignment est passé par référence
+    // et que l'objet est modifié dans le tableau
+    // Plus tard on utilisera un Web Service distant...
+    this.logginService.log(assignment.nom, "modifié !");
 
-    return of("Assignment service : assignment supprimé !")
+    return of("Assignment modifié");
   }
-  
+
+  deleteAssignement(assignment:Assignment) :Observable<string> {
+    let pos = this.assignments.indexOf(assignment);
+    this.assignments.splice(pos, 1);
+
+    this.logginService.log(assignment.nom, "supprimé !");
+
+
+    return of("Assignment supprimé")
+  }
+
 }

@@ -1,12 +1,12 @@
-import { Directive } from '@angular/core';
+import { Directive, ElementRef } from '@angular/core';
 
 @Directive({
-    selector: '[AppRendu]'
+  selector: '[appRendu]'
 })
-
 export class RenduDirective {
-    constructor()
-    {
 
-    }
+  constructor(el:ElementRef) {
+    el.nativeElement.style.backgroundColor = 'green';
+  }
+
 }
