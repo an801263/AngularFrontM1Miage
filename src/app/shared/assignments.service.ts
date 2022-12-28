@@ -3,11 +3,16 @@ import { Assignment } from '../assignments/assignment.model';
 import { Observable, of } from 'rxjs';
 import { LoggingService } from './logging.service';
 import { HttpClient } from '@angular/common/http';
+import { bdInitialAssignments } from './data';
+export { bdInitialAssignments } from './data';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AssignmentsService {
+  static peuplerBD() {
+    throw new Error('Method not implemented.');
+  }
   assignments:Assignment[] = [];
 
   constructor(private logginService:LoggingService,
@@ -60,6 +65,23 @@ export class AssignmentsService {
 
 
     return of("Assignment supprimé")
+  }
+
+  peuplerBD() {
+    bdInitialAssignments.forEach(a => {
+      let nouvelAssignment = new Assignment();
+      nouvelAssignment.id = a.id;
+      nouvelAssignment.nom = a.nom;
+      nouvelAssignment.dateDeRendu = new Date(a.dateDerendu);
+      nouvelAssignment.rendu = a.rendu; 
+
+      this.addAssignment(nouvelAssignment)
+      .subscribe(reponse => {
+        console.log(reponse.message);
+      });
+    })
+
+    console.log("***Tous les assignments sont ajoutés !***");
   }
 
 }
