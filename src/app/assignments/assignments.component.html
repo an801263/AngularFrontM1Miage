@@ -12,30 +12,49 @@
     </div>
   </div>
   <h2>Liste des assignments :</h2>
-
   
+  <div class="assignments__table">
+    <div class="assignments__table__header">
+      <h3>Nom du devoir</h3>
+      <h3>Date de rendu</h3>
+      <h3>Rendu</h3>
+      <h3>Détails</h3>
+    </div>
+      
+      <div class="assignments__table__items">
+        <mat-list class="table-mat-list" *ngFor="let assignment of assignments" [ngClass]="{
+          'rendu':assignment.rendu,
+          'nonrendu':'2px solid blue'
+          }">
+          
+          <mat-list-item>
+            <p>{{assignment.nom}}</p>
+          </mat-list-item>
 
-  <mat-list *ngFor="let assignment of assignments" [ngClass]="{
-        'rendu':assignment.rendu,
-        'nonrendu':'2px solid blue'
-        }">
-        <nav><a routerLink="/assignment/{{assignment.id}}">
-    <h3 mat-subheader>{{assignment.dateDeRendu | date}}</h3>
+          <mat-list-item>
+            <p>{{assignment.dateDeRendu | date}}</p>
+          </mat-list-item>
 
-    <mat-list-item (click)="assignmentClique(assignment)">
-      <p *ngIf="assignment.rendu; else nonsoumis">
-        {{assignment.nom}}, à rendre le {{assignment.dateDeRendu | date}},
-        soumis par l'élève : {{assignment.rendu}}.
-      </p>
+          <mat-list-item (click)="assignmentClique(assignment)">
+            <p *ngIf="assignment.rendu; else nonsoumis">
+              Le devoir a été rendu.
+            </p>
+      
+            <ng-template #nonsoumis>
+              <p>Le devoir n'a pas été rendu !</p>
+            </ng-template>
+          </mat-list-item>
 
-      <ng-template #nonsoumis>
-        <p>Le devoir {{assignment.nom}} n'a pas été rendu !</p>
-      </ng-template>
-
-      <mat-divider></mat-divider>
-    </mat-list-item>
-   </a></nav>
-  </mat-list>
+          <mat-list-item>
+            <a routerLink="/assignment/{{assignment.id}}">
+              <button mat-button color="primary">Voir détails</button>
+            </a>
+          </mat-list-item>
+          
+          <mat-divider></mat-divider>
+        </mat-list>
+    </div>
+  </div>
 </main>
 
 <!--<app-add-assignment (nouvelAssignment)="onNouvelAssignment($event)" *ngIf="formVisible"></app-add-assignment>-->
