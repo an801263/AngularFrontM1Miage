@@ -1,14 +1,19 @@
 <main class="container">
-  <h1>{{titre}}</h1>
+  <div class="container__top">
+    <h1>
+      <mat-icon class="content__container__title-icon">assignment_ind</mat-icon> {{titre}}
+    </h1>
+    <div class="ajouterBtn">
+      <a routerLink="/add">
+        <button class="ajouterBtn" mat-flat-button color="accent" (click)="onAddAssignmentBtn()">
+          Ajouter assignment
+        </button>
+      </a>
+    </div>
+  </div>
   <h2>Liste des assignments :</h2>
 
-  <div class="ajouterBtn">
-    <a routerLink="/add">
-      <button class="ajouterBtn" mat-flat-button color="accent" (click)="onAddAssignmentBtn()">
-        Ajouter assignment
-      </button>
-    </a>
-  </div>
+  
 
   <mat-list *ngFor="let assignment of assignments" [ngClass]="{
         'rendu':assignment.rendu,

@@ -1,31 +1,70 @@
 <mat-toolbar>
+
     <mat-toolbar-row>
-        <button mat-icon-button (click)="opened=!opened">
-          <mat-icon>menu</mat-icon>
-        </button>
-        <h1>
-            <nav>
-                <a routerLink="/home">{{title}}</a>
-            </nav>
-        </h1>
-        <button mat-button color="primary" (click)="initialiserLaBaseAvecDonneesDeTest()">Data BD Generation</button>
+        <div class="toolbar-general">
+            <div>
+                <button class="toolbar__menu__button" mat-icon-button (click)="opened=!opened">
+                <mat-icon>menu</mat-icon>
+                </button>
+
+                <h1>
+                    <nav>
+                        <a class="toolbar__title" routerLink="/home">{{title}}</a>
+                    </nav>
+                </h1>
+            </div>
+
+            <div>
+                <form class="toolbar__login">
+                    <mat-form-field class="login__field login__id">
+                      <mat-label>Identifiant</mat-label>
+                      <input type="pseudo" matInput>
+                    </mat-form-field>
+
+                    <mat-form-field class="login__field login__password">
+                        <mat-label>Mot de passe</mat-label>
+                        <input type="password" matInput>
+                      </mat-form-field>
+
+                      <button class="toolbar__menu__button button__login" mat-icon-button>
+                        <mat-icon>login</mat-icon>
+                        </button>
+                  </form>
+            </div>
+        </div>
+
+        <!-- BUTTON TO "PEUPLER LA BDD" -->
+        <!-- BUTTON IS HIDDEN IN CSS -->
+        <button id="data-gen" mat-button color="primary" (click)="initialiserLaBaseAvecDonneesDeTest()">Data BD Generation</button>
+        
     </mat-toolbar-row>
+
 </mat-toolbar>
+
 <mat-sidenav-container>
+
     <mat-sidenav [(opened)]="opened" mode="push">
         <mat-list>
             <mat-list-item>
-                <a routerLink="/home" style="text-decoration: none;">Home</a>
+                <a class="toolbar__nav__button nav__home" routerLink="/home">
+                    <mat-icon>home</mat-icon> Home
+                </a>
             </mat-list-item>
             <mat-list-item>
-                <a style="text-decoration: none;">Title2</a>
+                <a class="toolbar__nav__button" style="text-decoration: none;">
+                    <mat-icon>assignment_turned_in</mat-icon> Assignments
+                </a>
             </mat-list-item>
             <mat-list-item>
-                <a style="text-decoration: none;">Title3</a>
+                <a class="toolbar__nav__button" style="text-decoration: none;">
+                    <mat-icon>lock</mat-icon> Admins
+                </a>
             </mat-list-item>
         </mat-list>
     </mat-sidenav>
+
     <mat-sidenav-content>
         <router-outlet></router-outlet>
     </mat-sidenav-content>
+
 </mat-sidenav-container>

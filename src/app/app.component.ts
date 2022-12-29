@@ -9,7 +9,7 @@ import { AssignmentsService } from './shared/assignments.service';
 
 
 export class AppComponent {
-  title = "Application de gestion des devoirs à rendre (Assignments)";
+  title = "Application de Gestion des Devoirs";
   opened = false;
 
   constructor(private assignmentService: AssignmentsService) {}
