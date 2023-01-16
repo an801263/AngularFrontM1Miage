@@ -25,11 +25,15 @@ import { EditAssignmentComponent } from './assignments/edit-assignment/edit-assi
 import { AuthGuard } from './shared/auth.guard';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginAssignmentComponent } from './assignments/login-assignment/login-assignment.component';
+import { FilterPipe } from './filter.pipe';
 
 
 const routes : Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginAssignmentComponent },
   {path: '', component:AssignmentsComponent},
-  {path: 'home', component:AssignmentsComponent},
+  {path: 'home', component: AssignmentsComponent, canActivate: [AuthGuard]},
   {path: 'add', component:AddAssignmentComponent},
   {path: 'assignment/:id', component:AssignmentDetailComponent},
   {
@@ -45,6 +49,8 @@ const routes : Routes = [
     RenduDirective,
     AddAssignmentComponent,
     EditAssignmentComponent,
+    LoginAssignmentComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,

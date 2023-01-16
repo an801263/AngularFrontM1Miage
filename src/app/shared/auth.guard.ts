@@ -21,7 +21,6 @@ export class AuthGuard implements CanActivate {
         return true;
       } else {
         console.log("navigation non permise !")
-
         return false;
       }
     })
