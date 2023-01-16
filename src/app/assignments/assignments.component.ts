@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { AssignmentsService } from '../shared/assignments.service';
 import { Assignment } from './assignment.model';
+import { FilterPipe } from '../filter.pipe';
 
 @Component({
   selector: 'app-assignments',
   templateUrl: './assignments.component.html',
   styleUrls: ['./assignments.component.css'],
+  providers: [FilterPipe]
 })
 
 export class AssignmentsComponent implements OnInit {
@@ -16,7 +18,9 @@ export class AssignmentsComponent implements OnInit {
   dateRendu:Date = new Date();
   assignementSelectionne!:Assignment;
   formVisible = false;
-  assignments: Assignment[];
+  assignments: Assignment[];  
+  searchTerm: string;
+
 
   constructor (private assignmentService:AssignmentsService) {}
   

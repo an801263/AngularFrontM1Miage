@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AssignmentsService } from 'src/app/shared/assignments.service';
 import { Assignment } from '../assignment.model';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-add-assignment',
@@ -12,8 +14,8 @@ export class AddAssignmentComponent implements OnInit {
   // du formulaire
   nomDevoir: string = '';
   dateDeRendu!: Date;
-
-  constructor(private assignmentsService:AssignmentsService) {}
+  
+  constructor(private assignmentsService:AssignmentsService,  private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -32,5 +34,6 @@ export class AddAssignmentComponent implements OnInit {
       .subscribe(reponse => {
         console.log(reponse.message);
       });
+      this.router.navigate(['/home']);
   }
 }

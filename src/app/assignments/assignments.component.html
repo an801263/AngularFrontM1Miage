@@ -12,7 +12,8 @@
     </div>
   </div>
   <h2>Liste des assignments :</h2>
-  
+  <input type="search" [(ngModel)]="searchTerm" placeholder="Rechercher..." >
+
   <div class="assignments__table">
     <div class="assignments__table__header">
       <h3>Nom du devoir</h3>
@@ -20,9 +21,10 @@
       <h3>Rendu</h3>
       <h3>Détails</h3>
     </div>
-      
+
+
       <div class="assignments__table__items">
-        <mat-list class="table-mat-list" *ngFor="let assignment of assignments" [ngClass]="{
+        <mat-list class="table-mat-list" *ngFor="let assignment of assignments | filter:searchTerm" [ngClass]="{
           'rendu':assignment.rendu,
           'nonrendu':'2px solid blue'
           }">
