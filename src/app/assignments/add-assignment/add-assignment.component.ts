@@ -9,7 +9,6 @@ import { Assignment } from '../assignment.model';
 })
 export class AddAssignmentComponent implements OnInit {
   // emetteur de l'événementy (nouvelAssignment)
-
   // du formulaire
   nomDevoir: string = '';
   dateDeRendu!: Date;
